@@ -1,8 +1,13 @@
-Event Ticketing System - NoSQL Database Schema
+# Event Ticketing System - NoSQL Database Schema
+
 This document outlines the NoSQL database schema design for our event ticketing platform. The schema is optimized for MongoDB with Mongoose and follows document-oriented design principles for efficient querying and scalability.
-Collections
-User Collection
-javascriptCopy{
+
+## Collections
+
+### User Collection
+
+```javascript
+{
   _id: ObjectId,                    // Auto-generated unique identifier
   firstName: String,                // User's first name
   lastName: String,                 // User's last name
@@ -15,16 +20,19 @@ javascriptCopy{
   },                                // User access role
   createdAt: Date                   // Account creation timestamp
 }
-Virtual Properties:
+```
 
-fullName: String - Concatenated first and last name
+**Virtual Properties:**
+- **fullName**: String - Concatenated first and last name
 
-Indexes:
+**Indexes:**
+- **email**: Unique index
+- **role**: Standard index
 
-email: Unique index
+### Event Collection
 
-Event Collection
-javascriptCopy{
+```javascript
+{
   _id: ObjectId,                    // Auto-generated unique identifier
   title: String,                    // Event title
   description: String,              // Full event description
@@ -38,8 +46,8 @@ javascriptCopy{
   imageUrl: String,                 // URL to stored event image
   ticketTypes: [{                   // Array of ticket options
     name: String,                   // Ticket type name (e.g., "VIP", "Standard")
-    price: Number,                   // Price per ticket of this type
-    quantity: Number,               // Available tickets count
+    price: Number,                  // Price per ticket of this type
+    quantity: Number                // Available tickets count
   }],
   ticketsAvailable: Number,         // Available tickets count
   ticketsSold: Number,              // Sold tickets count
@@ -50,18 +58,21 @@ javascriptCopy{
   },
   createdAt: Date                   // Event creation timestamp
 }
-Virtual Properties:
+```
 
-totalTickets: Number - Sum of ticketsAvailable and ticketsSold
+**Virtual Properties:**
+- **totalTickets**: Number - Sum of ticketsAvailable and ticketsSold
 
-Indexes:
+**Indexes:**
+- **eventDate**: Standard index 
+- **category**: Standard index 
+- **"organizer.userId"**: Standard index
+- **"location.city"**: Standard index
 
-eventDate: Standard index
-category: Standard index
-"organizer.userId": Standard index
+### Booking Collection
 
-Booking Collection
-javascriptCopy{
+```javascript
+{
   _id: ObjectId,                    // Auto-generated unique identifier
   ticketQuantity: Number,           // Number of tickets purchased
   totalAmount: Number,              // Total price before discount
@@ -88,42 +99,41 @@ javascriptCopy{
   },                                // Booking status
   createdAt: Date                   // Booking creation timestamp
 }
-Virtual Properties:
+```
 
-finalPrice: Number - Calculated price after discount application
+**Virtual Properties:**
+- **finalPrice**: Number - Calculated price after discount application
 
-Indexes:
+**Indexes:**
+- **"event.eventId"**: Standard index 
+- **"customer.userId"**: Standard index 
+- **status**: Standard index 
+- **createdAt**: Standard index
 
-"event.eventId": Standard index
-"customer.userId": Standard index
-status: Standard index
-createdAt: Standard index
+## Design Principles
 
+### 1. Denormalization Strategy
 
-Design Principles
-
-1. Denormalization Strategy
 We've strategically denormalized data to optimize for common read patterns:
-
-User details embedded in bookings
-Event details embedded in bookings
-Organizer details embedded in events
+- **User details** embedded in bookings and events
+- **Event details** embedded in bookings
+- **Organizer details** embedded in events
 
 This approach reduces the need for expensive joins and additional database queries.
 
-2. Performance Considerations
+### 2. Performance Considerations
+
 The schema is optimized for these common operations:
+- **User profile retrieval**
+- **Event listings and filtering**
+- **Booking history** for users (filtering by status)
+- **Event management** for organizers
+- **Booking status tracking** and updates
 
-User profile retrieval
-Event listings and filtering
-Booking history for users (filtering by status)
-Event management for organizers
-Booking status tracking and updates
+### 3. Data Integrity
 
-3. Data Integrity
 Despite denormalization, we maintain data integrity through:
-
-Clear references between collections
-Consistent ID fields for data relationships
-Limited duplication of critical data
-Enum types for constrained fields like status and roles
+- **Clear references** between collections
+- **Consistent ID fields** for data relationships
+- **Limited duplication** of critical data
+- **Enum types** for constrained fields like status and roles

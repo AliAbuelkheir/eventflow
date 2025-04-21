@@ -9,8 +9,6 @@ const userRoutes = require('./routes/userRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-const errorHandler = require('./middleware/errorHandler');
-
 // Load environment variables
 dotenv.config();
 

@@ -29,16 +29,18 @@ const eventSchema = new mongoose.Schema({
   },
   eventDate: {
     type: Date,
-    required: true
+    required: true,
+    index: true
   },
   location: {
     venue: { type: String, required: true },
-    city: { type: String, required: true },
+    city: { type: String, required: true, index: true },
     country: { type: String, required: true }
   },
   category: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   imageUrl: {
     type: String,
@@ -62,7 +64,8 @@ const eventSchema = new mongoose.Schema({
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: true,
+      index: true
     },
     fullName: {
       type: String,

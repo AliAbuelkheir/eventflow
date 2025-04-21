@@ -13,7 +13,8 @@ const userSchema = new mongoose.Schema({
     email:{
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        index: true
     },
     profilePicture:{
         type: String,
@@ -26,7 +27,8 @@ const userSchema = new mongoose.Schema({
     role:{
         type: String,
         enum: ['admin', 'user', 'organizer'],
-        default: 'user'
+        default: 'user',
+        index: true
     },
     createdAt: {
         type: Date ,

@@ -21,7 +21,8 @@ const bookingSchema = new mongoose.Schema({
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: true,
+      index: true
     },
     fullName: {
       type: String,
@@ -36,7 +37,8 @@ const bookingSchema = new mongoose.Schema({
     eventId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Event',
-      required: true
+      required: true,
+      index: true
     },
     title: {
       type: String,
@@ -55,11 +57,13 @@ const bookingSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['pending', 'confirmed', 'canceled'],
-    default: 'pending'
+    default: 'pending',
+    index: true
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    index: true
   }
 });
 

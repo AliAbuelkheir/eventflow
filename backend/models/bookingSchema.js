@@ -1,10 +1,23 @@
 const mongoose = require('mongoose');
 
-const bookingSchema = new mongoose.Schema({
-  ticketQuantity: {
+// Define a sub-schema for the booked ticket details
+const bookedTicketSchema = new mongoose.Schema({
+  ticketTypeName: {
+    type: String,
+    required: true
+  },
+  quantity: {
     type: Number,
     required: true,
     min: 1
+  }
+}, { _id: false });
+
+const bookingSchema = new mongoose.Schema({
+  bookedTickets: {
+    type: [bookedTicketSchema],
+    required: true,
+    validate: [v => Array.isArray(v) && v.length > 0, 'At least one ticket type must be booked']
   },
   totalAmount: {
     type: Number,
@@ -65,6 +78,10 @@ const bookingSchema = new mongoose.Schema({
     default: Date.now,
     index: true
   }
+});
+
+bookingSchema.virtual('totalQuantityBooked').get(function() {
+  return this.bookedTickets.reduce((sum, ticket) => sum + ticket.quantity, 0);
 });
 
 bookingSchema.virtual('finalPrice').get(function () {

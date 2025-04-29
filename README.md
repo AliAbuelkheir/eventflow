@@ -64,7 +64,7 @@
    ```
 # 📚 API Routes
 
-> 📄 For full request/response specs, see [`/docs`](./docs).
+> 📄 For full request/response specs, see [`/docs`](./backend/docs).
 
 
 

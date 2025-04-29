@@ -69,39 +69,44 @@ This document outlines the NoSQL database schema design for our event ticketing 
 - **"organizer.userId"**: Standard index
 - **"location.city"**: Standard index
 
+
+
+
 ### Booking Collection
 
 ```javascript
 {
   _id: ObjectId,                    // Auto-generated unique identifier
-  ticketQuantity: Number,           // Number of tickets purchased
-  totalAmount: Number,              // Total price before discount
-  discountPercent: Number,          // Discount percentage (0-100)
-  customer: {                       // Embedded user reference
-    userId: ObjectId,               // Reference to user ID
-    fullName: String,               // Denormalized user's full name
-    profilePicture: String          // Denormalized profile image URL
+  bookedTickets: [                 // Array of ticket types and their quantities
+    {
+      ticketTypeName: String,      // Name of the ticket type (e.g., VIP, Regular)
+      quantity: Number             // Quantity of this ticket type (minimum 1)
+    }
+  ],
+  totalAmount: Number,             // Total amount before discount
+  discountPercent: Number,         // Discount percentage (0-100)
+  customer: {                      // Embedded user reference
+    userId: ObjectId,              // Reference to user ID
+    fullName: String,              // Denormalized user's full name
+    profilePicture: String         // Denormalized profile image URL
   },
-  event: {                          // Embedded event reference
-    eventId: ObjectId,              // Reference to event ID
-    title: String,                  // Denormalized event title
-    location: {                     // Denormalized location info
-      venue: String,
-      city: String, 
-      country: String
+  event: {                         // Embedded event reference
+    eventId: ObjectId,             // Reference to event ID
+    title: String,                 // Denormalized event title
+    location: {
+      venue: String,               // Venue name
+      city: String,                // City of the event
+      country: String              // Country of the event
     },
-    category: String                // Denormalized event category
+    category: String               // Denormalized event category
   },
-  status: {
-    type: String,
-    enum: ["pending", "confirmed", "canceled"],
-    default: "pending"
-  },                                // Booking status
-  createdAt: Date                   // Booking creation timestamp
+  status: "pending" | "confirmed" | "canceled", // Booking status
+  createdAt: Date                  // Booking creation timestamp
 }
 ```
 
 **Virtual Properties:**
+- **totalQuantityBooked**: Number — Sum of all ticket quantities
 - **finalPrice**: Number - Calculated price after discount application
 
 **Indexes:**

@@ -66,8 +66,8 @@ exports.getUserById = async (req, res, id) => {
 
 exports.updateUserById = async (req, res, id) => {
     try{
-        const { firstName, lastName, email, profilePicture } = req.body;
-        const updateData = { firstName, lastName, email, profilePicture };
+        const { firstName, lastName, profilePicture } = req.body;
+        const updateData = { firstName, lastName, profilePicture };
         const user = await User.findByIdAndUpdate(id, updateData, { new: true, runValidators: true }).select('-password');
         if (!user) {
             return res.status(404).json({

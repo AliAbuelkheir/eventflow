@@ -154,7 +154,6 @@ curl -X PUT http://localhost:5000/api/v1/forgetPassword \
 {
   "firstName": "Ali",
   "lastName": "Abuelkheir",
-  "email": "user@example.com",
   "profilePicture": "https://url.com/profile.jpg"
 }
 ```
@@ -185,6 +184,8 @@ curl -X PUT http://localhost:5000/api/v1/forgetPassword \
 |--------|------------------|---------------------------|
 | 200    | application/json | User object               |
 | 404    | application/json | User not found            |
+| 500    | application/json | Server error              |
+
 
 </details>
 
@@ -208,6 +209,8 @@ curl -X PUT http://localhost:5000/api/v1/forgetPassword \
 |--------|------------------|---------------------------|
 | 200    | application/json | Updated user object       |
 | 404    | application/json | User not found            |
+| 500    | application/json | Server error              |
+
 
 </details>
 
@@ -227,6 +230,8 @@ curl -X PUT http://localhost:5000/api/v1/forgetPassword \
 |--------|------------------|---------------------------|
 | 200    | application/json | Success message           |
 | 404    | application/json | User not found            |
+| 500    | application/json | Server error              |
+
 
 </details>
 
@@ -242,6 +247,8 @@ curl -X PUT http://localhost:5000/api/v1/forgetPassword \
 |--------|------------------|---------------------------|
 | 200    | application/json | List of bookings          |
 | 401    | application/json | Unauthorized              |
+| 500    | application/json | Server error              |
+
 
 </details>
 
@@ -257,6 +264,8 @@ curl -X PUT http://localhost:5000/api/v1/forgetPassword \
 |--------|------------------|---------------------------|
 | 200    | application/json | List of events            |
 | 401    | application/json | Unauthorized              |
+| 500    | application/json | Server error              |
+
 
 </details>
 

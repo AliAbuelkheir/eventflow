@@ -1,6 +1,6 @@
 # 🎟️ EventFlow - Ticket Booking System
 
-**EventFlow** is a backend-only RESTful API for managing event ticket bookings. It includes secure authentication with JWT, role-based access control (Admin, Organizer, User), and support for multiple ticket types per event (e.g., Regular, Fan Pit, VIP). The project follows backend best practices and is ready for integration with a future React frontend.
+**EventFlow** is a backend-only RESTful API for managing event ticket bookings. It includes secure authentication with JWT, role-based access control (Admin, Organizer, User), and support for multiple ticket types per event (e.g., Regular, Fan Pit, VIP). The project follows backend best practices and is ready for integration with a future React frontend. I created this personal project to showcase my backend skills using Nodejs.
 
 ## 🚀 Features
 
